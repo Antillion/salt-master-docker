@@ -1,6 +1,6 @@
 include env_make
 NS = docker.antillion.com:5000
-VERSION ?= 2016.3.1
+VERSION ?= 2016.3.1-api
 
 REPO = poven
 NAME = salt-master
@@ -18,6 +18,7 @@ shell:
 	sudo docker run --rm --name $(NAME)-$(INSTANCE) -i -t $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION) /bin/bash
 
 run:
+	echo "Note: to kill you'll need to Ctrl+Z and then issue: make kill"
 	sudo docker run --rm --name $(NAME)-$(INSTANCE) $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION)
 
 kill:

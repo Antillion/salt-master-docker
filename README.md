@@ -1,21 +1,32 @@
 # Docker Salt-Master
 
 A Docker image which allows you to run a containerised Salt-Master server. Based on of
-[thisissoon/Docker-Salt-Master](https://github.com/thisissoon/Docker-Salt-Master)
+[thisissoon/Docker-Salt-Master](https://github.com/thisissoon/Docker-Salt-Master) and
+[https://github.com/aexeagmbh/salt-master-docker](https://github.com/aexeagmbh/salt-master-docker).
 
 ## Running the Container
 
 For a test you can easily run the container like so:
 ```
-docker run --rm -it aexea/salt-master-docker
+docker run --rm -it antillion/salt-master-docker
 ```
 
-A more advanced configuration that mounts the volumes to a local directory and exposes the ports to the world is this:
+A more advanced configuration that mounts the volumes to a local directory and
+exposes the ports to the world using:
 ```
 docker run -d -p 4505:4505 -p 4506:4506 --restart=always -v /opt/salt/pki:/etc/salt/pki -v /opt/salt/cache:/var/salt/cache
 -v /opt/salt/log:/var/log/salt -v /srv/salt:/srv/salt -v /srv/salt/master.d:/etc/salt/master.d --name salt-master
-aexea/salt-master-docker
+antillion/salt-master-docker
 ```
+
+## Versions & capabilities
+
+There are two builds of each Salt version; one with and one without `salt-api`.
+
+Supported versions:
+
+ - 2015.8.8
+ - 2015.8.8-api
 
 ## Environment Variables
 
@@ -47,7 +58,7 @@ This will create a stopped container with the name of `salt-master-data` and
 will hold our persistant salt master data. Now we just need to run our master
 container with the `--volumes-from` command:
 
-    docker run --rm -it --name salt-master --volume-from salt-master-data aexea/salt-master-docker
+    docker run --rm -it --name salt-master --volume-from salt-master-data antillion/salt-master-docker
 
 ### Sharing Local Folders
 
@@ -67,6 +78,21 @@ The following ports are exposed:
  * `4506`
 
 These ports allow minions to communicate with the Salt Master.
+
+In API mode the following are also exposed:
+ * `22`
+ * `8000`
+
+## API Access
+
+In the event that you are using the salt api a default API user is present
+called `remotesalt`. The password is contained within the Dockerfile; if you wish
+to change it, you can generate your own build and supply the environment
+variable `SALT_PASSWORD`.
+
+As well as HTTP(S) access, SSH is enabled for the container so that it's possible
+to SSH in to run `salt-key` commands to accept/reject minions.
+
 
 ## Running Salt Commands
 

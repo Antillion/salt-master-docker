@@ -1,4 +1,4 @@
-#PORTS = -p 8080:80
+#PORTS = -p 8080:80 -p 2022:22 -p 4505:4505 -p 4506:4506
 
 #VOLUMES = -v /var/log/docker:/var/log
 
