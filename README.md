@@ -85,6 +85,9 @@ In API mode the following are also exposed:
 
 ## API Access
 
+Username: `remotesalt`
+Default password: `59r{Y3*912`
+
 In the event that you are using the salt api a default API user is present
 called `remotesalt`. The password is contained within the Dockerfile; if you wish
 to change it, you can generate your own build and supply the environment

@@ -11,5 +11,5 @@
 
 
 # Create the remote/API user
-useradd remotesalt
+useradd --create-home remotesalt
 echo -e "$SALT_PASSWORD\n$SALT_PASSWORD" | passwd remotesalt
