@@ -1,8 +1,8 @@
 include env_make
 NS = docker.antillion.com:5000
-VERSION ?= 2016.3.1-api
+VERSION ?= 2015.8.8-api
 
-REPO = poven
+REPO = salt-master-docker
 NAME = salt-master
 INSTANCE = default
 
@@ -10,9 +10,16 @@ INSTANCE = default
 
 build:
 	sudo docker build -t $(NS)/$(REPO):$(VERSION) .
+	sudo docker tag -f $(NS)/$(REPO):$(VERSION) $(PRIVATE_REG)/$(REPO):$(VERSION)
 
 push:
-	sudo docker push $(NS)/$(REPO):$(VERSION)
+	sudo gcloud docker -- push $(NS)/$(REPO):$(VERSION)
+
+push_private:
+	sudo docker push $(PRIVATE_REG)/$(REPO):$(VERSION)
+
+tag_private: build
+	sudo docker tag $(NS)/$(REPO):$(VERSION) $(PRIVATE_REG)/$(REPO):$(VERSION)
 
 push_docker:
 	sudo docker tag -f $(NS)/$(REPO):$(VERSION) antillion/salt-master-docker:$(VERSION)
