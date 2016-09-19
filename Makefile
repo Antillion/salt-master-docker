@@ -1,6 +1,7 @@
 include env_make
 NS = docker.antillion.com:5000
-VERSION ?= 2015.8.8-api
+VERSION ?= antillion-devel-api
+PRIVATE_REG = docker-registry.poven.antillion.mil.uk:5000
 
 REPO = salt-master-docker
 NAME = salt-master
@@ -40,6 +41,9 @@ start:
 
 stop:
 	sudo docker stop $(NAME)-$(INSTANCE)
+
+test:
+	rake SPEC_USER=$(SPEC_USER) SPEC_PASSWORD=$(SPEC_PASSWORD)
 
 rm:
 	sudo docker rm $(NAME)-$(INSTANCE)

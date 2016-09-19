@@ -4,3 +4,7 @@
 
 #ENV = \
 #  -e SOME_KEY=SOME_VALUE
+
+
+SPEC_USER=vagrant
+SPEC_PASSWORD=vagrant
