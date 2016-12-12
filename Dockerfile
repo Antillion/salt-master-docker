@@ -59,11 +59,13 @@ RUN apt-get install -y openssh-server && \
 		cat /tmp/master.api.conf >> /etc/salt/master
 
 RUN /tmp/create-user.sh &&  \
-		echo "Cmnd_Alias SALT_CMDS = /usr/bin/salt,  /usr/bin/salt-api,  /usr/bin/salt-call,  /usr/bin/salt-cloud,  /usr/bin/salt-cp,  /usr/bin/salt-key,  /usr/bin/salt-master,  /usr/bin/salt-minion,  /usr/bin/salt-run" >> /etc/sudoers && \
-		echo "remotesalt ALL= NOPASSWD: SALT_CMDS" >> /etc/sudoers
+		echo "Cmnd_Alias SALT_CMDS = /usr/bin/salt, /usr/bin/salt-*, /usr/local/bin/salt, /usr/local/bin/salt-*" >> /etc/sudoers && \
+		echo "remotesalt ALL = NOPASSWD: SALT_CMDS" >> /etc/sudoers
 
 # Volumes
-VOLUME ["/etc/salt/pki", "/var/cache/salt", "/var/log/salt", "/etc/salt/master.d", "/srv/salt"]
+VOLUME ["/etc/salt/pki", "/var/cache/salt", "/var/log/salt", \
+			  "/etc/salt/master.d", "/srv/salt", "/etc/salt/", \
+				"/etc/salt/cloud.providers.d", "/etc/salt/cloud.profiles.d"]
 
 # Add Run File
 ADD run.sh /usr/local/bin/run.sh
