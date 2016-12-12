@@ -1,0 +1,6 @@
+#PORTS = -p 8080:80 -p 2022:22 -p 4505:4505 -p 4506:4506
+
+VOLUMES =  -v /opt/salt/pki:/etc/salt/pki  -v /opt/salt/cache:/var/salt/cache -v /opt/salt/log:/var/log/salt -v /srv/salt:/srv/salt -v /srv/salt/master.d:/etc/salt/master.d 
+
+#ENV = \
+#  -e SOME_KEY=SOME_VALUE

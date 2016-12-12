@@ -7,7 +7,11 @@
 set -e
 
 # Log Level
-LOG_LEVEL=${LOG_LEVEL:-"error"}
+LOG_LEVEL=${LOG_LEVEL:-"info"}
 
 # Run Salt as a Deamon
-exec /usr/bin/salt-master --log-level=$LOG_LEVEL
+
+service ssh start
+tail -f /var/log/salt/master &
+exec /usr/local/bin/salt-api --log-level=${LOG_LEVEL} & \
+exec /usr/local/bin/salt-master --log-level=$LOG_LEVEL
