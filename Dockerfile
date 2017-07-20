@@ -5,7 +5,7 @@ FROM debian:jessie
 MAINTAINER Oliver Tupman <otupman@antillion.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV SALT_VERSION=devel
+ENV SALT_VERSION=2017.7.0
 ENV SALT_PASSWORD=59r{Y3*912
 
 # Install dependencies
@@ -20,8 +20,8 @@ RUN apt-get update && apt-get install -y \
 	--no-install-recommends
 
 # Add salt stack repository
-#RUN curl -sSL "https://repo.saltstack.com/apt/debian/8/amd64/archive/$SALT_VERSION/SALTSTACK-GPG-KEY.pub" | sudo apt-key add -
-#RUN sudo echo "deb http://repo.saltstack.com/apt/debian/8/amd64/archive/$SALT_VERSION jessie main" >> /etc/apt/sources.list.d/saltstack.list
+RUN curl -sSL "https://repo.saltstack.com/apt/debian/8/amd64/archive/$SALT_VERSION/SALTSTACK-GPG-KEY.pub" | sudo apt-key add -
+RUN sudo echo "deb http://repo.saltstack.com/apt/debian/8/amd64/archive/$SALT_VERSION jessie main" >> /etc/apt/sources.list.d/saltstack.list
 RUN apt-get update &&           \
     apt-get install -y          \
         build-essential         \
@@ -34,16 +34,16 @@ RUN apt-get update &&           \
         virtualenvwrapper       \
         unzip
 
-ADD https://github.com/Antillion/salt/archive/salt-cloud-esx_5_5-fixes.zip salt-cloud-esx_5_5-fixes.zip
-RUN unzip salt-cloud-esx_5_5-fixes.zip
-WORKDIR salt-salt-cloud-esx_5_5-fixes
-RUN pip install -e .
+#ADD https://github.com/Antillion/salt/archive/salt-cloud-esx_5_5-fixes.zip salt-cloud-esx_5_5-fixes.zip
+#RUN unzip salt-cloud-esx_5_5-fixes.zip
+#WORKDIR salt-salt-cloud-esx_5_5-fixes
+#RUN pip install -e .
 
 # Install Salt
-# RUN apt-get update && apt-get install -y \
-# 	salt-master \
-# 	salt-cloud \
-# 	--no-install-recommends
+ RUN apt-get update && apt-get install -y \
+ 	salt-master \
+ 	salt-cloud \
+ 	--no-install-recommends
 # Install further dependencies
 RUN pip install apache-libcloud python-simple-hipchat boto dnspython cli53
 
@@ -82,8 +82,8 @@ VOLUME ["/etc/salt/pki", "/var/cache/salt", "/var/log/salt",        \
 ADD run.sh /usr/local/bin/run.sh
 RUN chmod +x /usr/local/bin/run.sh &&   \
     mkdir -p /var/log/salt &&           \
-    touch /var/log/salt/master &&       \
-    cp /usr/local/bin/salt* /usr/bin/
+    touch /var/log/salt/master
+    #cp /usr/local/bin/salt* /usr/bin/
 
 
 
