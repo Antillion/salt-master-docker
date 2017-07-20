@@ -50,11 +50,12 @@ RUN pip install apache-libcloud python-simple-hipchat boto dnspython cli53
 # Salt API installation (along with SSH)
 
 RUN apt-get -y install gcc                                  \
-    python-dev &&                                           \
+                       python-dev                        && \
 	pip install pyopenssl                                   \
-	cherrypy &&                                             \
-	salt-call --local tls.create_self_signed_cert &&        \
-	apt-get purge -y gcc && apt-get purge -y python-dev &&  \
+	            cherrypy                                    \
+	            pyvmomi                                  && \
+	salt-call --local tls.create_self_signed_cert        && \
+	apt-get purge -y gcc && apt-get purge -y python-dev  && \
 	apt-get autoremove -y
 
 ADD create-user.sh /tmp/create-user.sh
