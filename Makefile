@@ -1,11 +1,15 @@
 include env_make
-NS = docker.antillion.com:5000
-VERSION ?= antillion-devel-api
+NS ?= antillion
+VERSION ?= $$(git rev-parse --abbrev-ref HEAD)
 PRIVATE_REG = docker-registry.poven.antillion.mil.uk:5000
 
 REPO = salt-master-docker
 NAME = salt-master
 INSTANCE = default
+
+VOLUMES ?=
+PORTS ?=
+ENV ?=
 
 SUDO_CMD ?= sudo
 
@@ -13,7 +17,7 @@ SUDO_CMD ?= sudo
 
 build:
 	$(SUDO_CMD) docker build -t $(NS)/$(REPO):$(VERSION) .
-	$(SUDO_CMD) docker tag -f $(NS)/$(REPO):$(VERSION) $(PRIVATE_REG)/$(REPO):$(VERSION)
+	$(SUDO_CMD) docker tag $(NS)/$(REPO):$(VERSION) $(PRIVATE_REG)/$(REPO):$(VERSION)
 
 push:
 	$(SUDO_CMD) gcloud docker -- push $(NS)/$(REPO):$(VERSION)
