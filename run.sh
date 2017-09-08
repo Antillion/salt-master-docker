@@ -13,5 +13,5 @@ LOG_LEVEL=${LOG_LEVEL:-"info"}
 
 service ssh start
 tail -f /var/log/salt/master &
-exec /usr/local/bin/salt-api --log-level=${LOG_LEVEL} & \
-exec /usr/local/bin/salt-master --log-level=$LOG_LEVEL
+exec /usr/bin/salt-api --log-level=${LOG_LEVEL} & \
+exec /usr/bin/salt-master --log-level=$LOG_LEVEL

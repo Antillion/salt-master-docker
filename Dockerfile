@@ -34,15 +34,11 @@ RUN apt-get update &&           \
         virtualenvwrapper       \
         unzip
 
-#ADD https://github.com/Antillion/salt/archive/salt-cloud-esx_5_5-fixes.zip salt-cloud-esx_5_5-fixes.zip
-#RUN unzip salt-cloud-esx_5_5-fixes.zip
-#WORKDIR salt-salt-cloud-esx_5_5-fixes
-#RUN pip install -e .
-
 # Install Salt
  RUN apt-get update && apt-get install -y \
  	salt-master \
- 	salt-cloud \
+ 	salt-cloud 	\
+	salt-api 		\
  	--no-install-recommends
 # Install further dependencies
 RUN pip install apache-libcloud python-simple-hipchat boto dnspython cli53
